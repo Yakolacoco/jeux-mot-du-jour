@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-jeu : Trouve le mot du jour</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 40px;
+        }
+        
+        .game-container {
+            max-width: 500px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        button {
+            width: 90%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Trouve le mot du jour</h1>
+    <div class="game-container">
+        <p id="hint"><strong>Indice :</strong> </p>
+        <input type="text" id="guess" placeholder="Entrez votre réponse ici" />
+        <button onclick="checkAnswer()">Valider</button>
+        <p class="result" id="result"></p>
+    </div>
+
+    <script>
+        const wordsAndHints = [{
+            word: "patate",
+            hint: "Un féculent utilisé dans la raclette",
+            altWords: ["pomme de terre"]
+        }, {
+            word: "ordinateur",
+            hint: "Un appareil indispensable pour programmer",
+            altWords: ["pc"]
+        }, {
+            word: "python",
+            hint: "Un langage de programmation très populaire",
+            altWords: ["langage python", "code python"]
+        }, {
+            word: "raquette",
+            hint: "Utile pour jouer au tennis",
+            altWords: ["raquette de tennis"]
+        }, {
+            word: "neige",
+            hint: "Blanche et présente en hiver",
+        }, {
+            word: "chat",
+            hint: "Un animal domestique qui miaule",
+            altWords: ["chaton", "chate"]
+        }, {
+            word: "voiture",
+            hint: "Un moyen de transport à quatre roues",
+            altWords: ["automobile"]
+        }];
+
+        const today = new Date();
+        const dayIndex = today.getDate() % wordsAndHints.length; // Modulo pour boucler
+        const {
+            word: correctWord,
+            hint,
+            altWords
+        } = wordsAndHints[dayIndex];
+
+        document.getElementById("hint").innerHTML += hint;
+
+        function checkAnswer() {
+            const userGuess = document.getElementById("guess").value.trim().toLowerCase();
+            const resultElement = document.getElementById("result");
+            if ([correctWord, ...altWords].includes(userGuess)) {
+                resultElement.textContent = "Bravo ! Vous avez trouvé le mot ! 🎉";
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = "Dommage, ce n'est pas le bon mot. Réessayez !";
+                resultElement.style.color = "red";
+            }
+        }
+    </script>
+</body>
+
+</html>
